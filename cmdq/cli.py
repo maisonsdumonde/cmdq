@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 import sys
 from os import system
+import os.path
 
 from .queue import CommandQueue
 from .resource import ResourcePool
@@ -53,6 +54,7 @@ def load_configuration(filename):
         code = compile(f.read(), filename, 'exec')
 
     config = {
+        '__path__': [os.path.dirname(filename)],
         'getenv': getenv,
         'ResourcePool': ResourcePool,
         'system': log_decorator(system),
