@@ -13,25 +13,37 @@ an ubuntu system for example, use the following::
 Download
 ::::::::
 
-git clone git://github.com/maisonsdumonde/cmdq.git
-cd cmdq
+From github::
+
+    git clone git://github.com/maisonsdumonde/cmdq.git
+    cd cmdq
 
 Install in a virtualenv
 :::::::::::::::::::::::
 
-virtualenv .py-env
-. .py-env/bin/activate
-python setup.py develop
+Isolating your cmdq in a virtualenv is highly encouraged::
+
+    virtualenv .py-env
+    . .py-env/bin/activate
+    python setup.py develop
 
 Install globally in the system
 ::::::::::::::::::::::::::::::
 
-sudo python setup.py install
+No fear? Install globally::
+
+    sudo python setup.py install
 
 Syntax
 ::::::
 
-cmdq example/simple.cmdq
+Run a cmdq file::
+
+    cmdq example/simple.cmdq
+
+For cmdq file syntax, it's mostly python, and loader looks for a "cmdq"
+attribute which must be a list of your python callables to dispatch in
+threads.
 
 Config
 ::::::
@@ -57,6 +69,18 @@ worker, you may end up in a deadlock situation::
         print server
 
     # ...
+
+Global initializer/finalizer
+::::::::::::::::::::::::::::
+
+Sometimes it's handy to execute something before any cmdq is started, or after
+all cmdq finished execution::
+
+    def initialize():
+        system('echo I am the first!')
+
+    def finalize():
+        system('echo I am the last!')
 
 License
 :::::::
